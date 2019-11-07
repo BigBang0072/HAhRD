@@ -17,17 +17,15 @@ def get_variable_on_cpu(name,shape,initializer,weight_decay=None):
         initialized in CPU.
         (See Tesnorflow website for more information about model)
         Inspiration of this function:
-        https://github.com/tensorflow/models/blob/master/tutorials
-                /image/cifar10/cifar10.py
+        https://github.com/tensorflow/models/blob/master/tutorials/image/cifar10/cifar10.py
     USAGE:
         INPUTS:
             name        :the name of weight variable (W/b)
-            shape       :the shape of the Variable
-            weight_decay:(lambda)if not None then the value specified
-                            will be ysed for L2 regularization
+            shape       :the shape of the variable
+            weight_decay:(lambda)if not None then the value specified will be used for L2 regularization
             initializer :the name of the variable initializer
         OUTPUTS:
-            weight      :the weight Variable created
+            weight      :the weight variable created
     '''
     #Initializing the variable on CPU for sharing weights among GPU
     with tf.device('/cpu:0'):
@@ -37,11 +35,11 @@ def get_variable_on_cpu(name,shape,initializer,weight_decay=None):
 
     if not weight_decay==None:
         #Applying the l2 regularization and multiplying with
-        #the hyperpaprameter weight_decay: lambda
+        #the hyperparameter weight_decay: lambda
         reg_loss=tf.multiply(tf.nn.l2_loss(weight),weight_decay,
                                 name='lambd_hyparam')
         #Adding the loss to the collection so that it could be
-        #added to final loss
+        #Added to final loss
         tf.add_to_collection('all_losses',reg_loss)
 
     return weight
